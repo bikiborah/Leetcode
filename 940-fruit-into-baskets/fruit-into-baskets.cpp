@@ -13,15 +13,11 @@ public:
                 r++;
             }
             else{
-                while(mpp.size()>2){
-                    mpp[fruits[l]]--;
-                    if(mpp[fruits[l]]==0){
-                        mpp.erase(fruits[l]);
-                    }
-                    l++;
+                mpp[fruits[l]]--;
+                if(mpp[fruits[l]]==0){
+                    mpp.erase(fruits[l]);
                 }
-                
-                ml=max(r-l+1,ml);
+                l++;
                 r++;
             }
         }
