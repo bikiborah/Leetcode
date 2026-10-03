@@ -1,27 +1,27 @@
 class Solution {
 public:
     string frequencySort(string s) {
-         int hash[256] = {0};
 
+        int freq[128] = {0};
 
-        for(int i = 0; i < s.length(); i++) {
-            hash[s[i]]++;
+        for(char c : s) {
+            freq[c]++;
         }
+
+        vector<pair<int, char>> v;
+
+        for(int i = 0; i < 128; i++) {
+            if(freq[i] > 0) {
+                v.push_back({freq[i], char(i)});
+            }
+        }
+
+        sort(v.begin(), v.end(), greater<pair<int, char>>());
 
         string ans;
 
-        for(int freq = s.length(); freq >= 1; freq--) {
-
-            for(int i = 0; i < 256; i++) {
-
-                if(hash[i] == freq) {
-                    
-                    for(int j=0;j<freq;j++){
-                        ans+=(char(i));
-                    }
-                    
-                }
-            }
+        for(auto [count, c] : v) {
+            ans.append(count, c);
         }
 
         return ans;
