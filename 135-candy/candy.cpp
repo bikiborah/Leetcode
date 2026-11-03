@@ -1,46 +1,39 @@
 class Solution {
-private:
-    int sum(vector<int> arr) {
-        int total = 0;
-
-        for(auto it : arr) {
-            total += it;
-        }
-
-        return total;
-    }
-
 public:
     int candy(vector<int>& ratings) {
-
+        //your code goes here
+        int sum = 1; int i = 1;
         int n = ratings.size();
-
-        vector<int> List(n, 1);
-
-        // Going right
-        for(int i = 1; i < n; i++) {
-            if(ratings[i] > ratings[i-1]) {
-                List[i] = List[i-1] + 1;
+        // go straight
+        while(i < n){
+            if(ratings[i] == ratings[i-1]){
+              sum = sum + 1;
+              i++;
+              continue;
             }
-        }
 
-        vector<int> Right = List;
-
-        List = vector<int>(n, 1);
-
-        // Going left
-        for(int i = n-2; i >= 0; i--) {
-            if(ratings[i] > ratings[i+1]) {
-                List[i] = List[i+1] + 1;
+            int peak = 1;
+            // inc slope
+            while(i < n && ratings[i] > ratings[i-1]){
+              peak ++;
+              sum += peak;
+              i++;
             }
+            int down = 1;
+            // dec slope
+            while(i < n && ratings[i] < ratings[i-1]){
+              sum += down;
+              down++;
+              i++;
+            }
+
+            // assign the max of a peak vertex with max one
+            if(peak < down){
+              sum += (down - peak);
+            }     
         }
 
-        int ans = 0;
+        return sum;
 
-        for(int i = 0; i < n; i++) {
-            ans += max(List[i], Right[i]);
-        }
-
-        return ans;
     }
 };
